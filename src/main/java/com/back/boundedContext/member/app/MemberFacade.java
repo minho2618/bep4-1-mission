@@ -1,10 +1,6 @@
 package com.back.boundedContext.member.app;
 
 import com.back.boundedContext.member.domain.Member;
-<<<<<<<< HEAD:src/main/java/com/back/boundedContext/member/app/MemberFacade.java
-========
-import com.back.global.exception.DomainException;
->>>>>>>> origin/main:src/main/java/com/back/boundedContext/member/app/MemberService.java
 import com.back.boundedContext.member.out.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
