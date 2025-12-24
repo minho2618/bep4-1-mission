@@ -9,21 +9,11 @@ import com.back.shared.post.event.PostCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
-public class PostService {
+public class PostJoinUseCase {
     private final PostRepository postRepository;
     private final EventPublisher eventPublisher;
-
-    public long count() {
-        return postRepository.count();
-    }
-
-    public Optional<Post> findById(int postId) {
-        return postRepository.findById(postId);
-    }
 
     public Post write(Member author, String title, String content) {
         Post post = postRepository.save(new Post(author, title, content));

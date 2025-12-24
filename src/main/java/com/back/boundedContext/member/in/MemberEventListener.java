@@ -25,6 +25,8 @@ public class MemberEventListener {
         member.increaseActivityScore(3);
     }
 
+    @TransactionalEventListener(phase = AFTER_COMMIT)
+    @Transactional(propagation = REQUIRES_NEW)
     public void handle(PostCommentCreatedEvent event) {
         Member member = memberFacade.findById(event.getPostCommentDto().getAuthorId()).get();
 
