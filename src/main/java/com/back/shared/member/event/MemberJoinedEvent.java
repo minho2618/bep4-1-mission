@@ -7,5 +7,5 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class MemberJoinedEvent {
-    private final MemberDto memberDto;
+    private final MemberDto member;
 }
