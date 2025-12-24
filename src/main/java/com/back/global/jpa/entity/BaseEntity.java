@@ -22,6 +22,6 @@ public abstract class BaseEntity {
     }
 
     public abstract int getId();
-    public abstract LocalDateTime getCreatedDate();
+    public abstract LocalDateTime getCreateDate();
     public abstract LocalDateTime getModifyDate();
 }
