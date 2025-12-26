@@ -2,8 +2,6 @@ package com.back.boundedContext.post.app;
 
 import com.back.boundedContext.post.domain.Post;
 import com.back.boundedContext.post.domain.PostMember;
-import com.back.boundedContext.post.out.PostMemberRepository;
-import com.back.boundedContext.post.out.PostRepository;
 import com.back.global.rsData.RsData;
 import com.back.shared.member.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
@@ -15,16 +13,16 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class PostFacade {
-    private final PostRepository postRepository;
     private final PostWriteUseCase postWriteUseCase;
-    private final PostMemberRepository postMemberRepository;
+    private final PostSupport postSupport;
+    private final PostSyncMemberUseCase postSyncMemberUseCase;
 
     public long count() {
-        return postRepository.count();
+        return postSupport.count();
     }
 
     public Optional<Post> findById(int postId) {
-        return postRepository.findById(postId);
+        return postSupport.findById(postId);
     }
 
     @Transactional
@@ -32,23 +30,13 @@ public class PostFacade {
         return postWriteUseCase.write(author, title, content);
     }
 
-    @Transactional
-    public PostMember syncMember(MemberDto member) {
-        PostMember postMember = new PostMember(
-                member.getId(),
-                member.getCreateDate(),
-                member.getModifyDate(),
-                member.getUsername(),
-                "",
-                member.getNickname(),
-                member.getActivityScore()
-        );
-
-        return postMemberRepository.save(postMember);
+    @Transactional(readOnly = true)
+    public Optional<PostMember> findMemberByUsername(String username) {
+        return postSupport.findMemberByUsername(username);
     }
 
-    @Transactional(readOnly = true)
-    public Optional<PostMember> findPostMemberByUsername(String username) {
-        return postMemberRepository.findByUsername(username);
+    @Transactional
+    public PostMember syncMember(MemberDto member) {
+        return postSyncMemberUseCase.syncMember(member);
     }
 }
