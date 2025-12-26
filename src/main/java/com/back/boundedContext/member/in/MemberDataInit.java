@@ -7,6 +7,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.annotation.Order;
 import org.springframework.transaction.annotation.Transactional;
 
 @Configuration
@@ -21,6 +22,7 @@ public class MemberDataInit {
     }
 
     @Bean
+    @Order(1)
     public ApplicationRunner memberInitDataRunner() {
         return args -> {
             self.makeBaseMembers();
