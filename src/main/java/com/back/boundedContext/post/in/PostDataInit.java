@@ -23,7 +23,7 @@ public class PostDataInit {
     }
 
     @Bean
-    public ApplicationRunner baseInitDataRunner() {
+    public ApplicationRunner postInitDataRunner() {
         return args -> {
             self.makeBasePosts();
             self.makeBasePostComments();
