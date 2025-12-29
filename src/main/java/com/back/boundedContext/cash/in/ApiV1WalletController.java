@@ -1,3 +1,4 @@
+
 package com.back.boundedContext.cash.in;
 
 import com.back.boundedContext.cash.app.CashFacade;
@@ -10,15 +11,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/cash/wallets")
+@RequestMapping("/api/v1/cashwallets")
 @RequiredArgsConstructor
 public class ApiV1WalletController {
     private final CashFacade cashFacade;
 
     @GetMapping("/by-holder/{holderId}")
     @Transactional(readOnly = true)
-    public WalletDto getItemByHolder(@PathVariable int holderId) {
-        return cashFacade.findWalletByHolderId(holderId)
+    public WalletDto getItemByHolder(
+            @PathVariable int holderId
+    ) {
+        return cashFacade
+                .findWalletByHolderId(holderId)
                 .map(WalletDto::new)
                 .get();
     }

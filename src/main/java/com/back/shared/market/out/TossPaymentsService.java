@@ -33,7 +33,11 @@ public class TossPaymentsService {
     }
 
     public Map<String, Object> confirmCardPayment(String paymentKey, String orderId, long amount) {
-        TossPaymentsConfirmRequest requestBody = new TossPaymentsConfirmRequest(paymentKey, orderId, amount);
+        TossPaymentsConfirmRequest requestBody = new TossPaymentsConfirmRequest(
+                paymentKey,
+                orderId,
+                amount
+        );
 
         try {
             ResponseEntity<Map> responseEntity = createConfirmRequest(requestBody)
@@ -113,6 +117,5 @@ public class TossPaymentsService {
     }
 
     public record TossPaymentsConfirmRequest(String paymentKey, String orderId, long amount) {
-
     }
 }

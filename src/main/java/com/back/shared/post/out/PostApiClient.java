@@ -1,6 +1,7 @@
 package com.back.shared.post.out;
 
 import com.back.shared.post.dto.PostDto;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClient;
@@ -9,10 +10,13 @@ import java.util.List;
 
 @RestController
 public class PostApiClient {
+    private final RestClient restClient;
 
-    private final RestClient restClient = RestClient.builder()
-            .baseUrl("http://localhost:8080/post/api/v1")
-            .build();
+    public PostApiClient(@Value("${custom.global.internalBackUrl}") RestClient internalBackUrl) {
+        restClient = org.springframework.web.client.RestClient.builder()
+                .baseUrl(internalBackUrl + "/v1/api/post")
+                .build();
+    }
 
     public List<PostDto> getItems() {
         return restClient.get()
