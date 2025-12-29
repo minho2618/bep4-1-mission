@@ -27,6 +27,8 @@ public class Order extends BaseIdAndTime {
 
     private LocalDateTime paymentDate;
 
+    private LocalDateTime cancelDate;
+
     @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
     private List<OrderItem> items = new ArrayList<>();
 
@@ -74,5 +76,13 @@ public class Order extends BaseIdAndTime {
 
     public void completePayment() {
         paymentDate = LocalDateTime.now();
+    }
+
+    public boolean isCanceled() {
+        return cancelDate != null;
+    }
+
+    public boolean isPaymentInProgress() {
+        return requestPaymentDate != null && paymentDate == null && cancelDate == null;
     }
 }
