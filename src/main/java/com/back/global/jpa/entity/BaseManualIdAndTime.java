@@ -13,13 +13,13 @@ import java.time.LocalDateTime;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-@Getter
 @NoArgsConstructor
+@Getter
 public abstract class BaseManualIdAndTime extends BaseEntity {
     @Id
     private int id;
     @CreatedDate
-    private LocalDateTime createdDate;
+    private LocalDateTime createDate;
     @LastModifiedDate
     private LocalDateTime modifyDate;
 

@@ -1,7 +1,11 @@
 package com.back.boundedContext.market.app;
 
+import com.back.boundedContext.market.domain.Cart;
 import com.back.boundedContext.market.domain.MarketMember;
+import com.back.boundedContext.market.domain.Order;
 import com.back.boundedContext.market.domain.Product;
+import com.back.global.rsData.RsData;
+import com.back.shared.market.dto.MarketMemberDto;
 import com.back.shared.member.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +19,8 @@ public class MarketFacade {
     private final MarketSupport marketSupport;
     private final MarketSyncMemberUseCase marketSyncMemberUseCase;
     private final MarketCreateProductUseCase marketCreateProductUseCase;
+    private final MarketCreateOrderUseCase marketCreateOrderUseCase;
+    private final MarketCreateCartUseCase marketCreateCartUseCase;
 
     @Transactional
     public MarketMember syncMember(MemberDto member) {
@@ -27,12 +33,37 @@ public class MarketFacade {
     }
 
     @Transactional
-    public Product createProduct(MarketMember seller, String sourceTypeCode, int sourceId, String name, String description, int price, int salePrice) {
+    public Product createProduct(MarketMember seller, String sourceTypeCode, int sourceId, String name, String description, long price, long salePrice) {
         return marketCreateProductUseCase.createProduct(seller, sourceTypeCode, sourceId, name, description, price, salePrice);
     }
 
     @Transactional(readOnly = false)
     public Optional<MarketMember> findMemberByUsername(String username) {
         return marketSupport.findMemberByUsername(username);
+    }
+
+    @Transactional
+    public RsData<Cart> createCart(MarketMemberDto buyer) {
+        return marketCreateCartUseCase.createCart(buyer);
+    }
+
+    @Transactional
+    public Optional<Cart> findCartByBuyer(MarketMember buyer) {
+        return marketSupport.findCartByBuyer(buyer);
+    }
+
+    @Transactional
+    public Optional<Product> findProductById(int id) {
+        return marketSupport.findProductById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public long ordersCount() {
+        return marketSupport.countOrders();
+    }
+
+    @Transactional
+    public RsData<Order> createOrder(Cart cart) {
+        return marketCreateOrderUseCase.createOrder(cart);
     }
 }
