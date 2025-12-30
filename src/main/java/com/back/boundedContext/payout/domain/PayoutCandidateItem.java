@@ -4,6 +4,7 @@ import com.back.global.jpa.entity.BaseIdAndTime;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -30,7 +31,7 @@ public class PayoutCandidateItem extends BaseIdAndTime {
     private long amount;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @Getter
+    @Setter
     private PayoutItem payoutItem;
 
     public PayoutCandidateItem(PayoutEventType eventType, String relTypeCode, int relId, LocalDateTime paymentDate, PayoutMember payer, PayoutMember payee, long amount) {
