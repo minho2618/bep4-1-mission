@@ -33,7 +33,7 @@ public class MarketDataInit {
     }
 
     @Bean
-    @org.springframework.core.annotation.Order(5)
+    @org.springframework.core.annotation.Order(3)
     public ApplicationRunner marketDataInitApplicationRunner() {
         return args -> {
             self.makeBaseProducts();
@@ -187,8 +187,7 @@ public class MarketDataInit {
     public void makeBasePaidOrders() {
         Order order1 = marketFacade.findOrderById(1).get();
 
-        if (order1.isPaid())
-            return;
+        if (order1.isPaid()) return;
 
         marketFacade.requestPayment(order1, 0);
     }
