@@ -1,6 +1,7 @@
 package com.back.global.jpa.entity;
 
 import com.back.global.global.GlobalConfig;
+import com.back.standard.event.HasEventName;
 import com.back.standard.modelType.CanGetModelTypeCode;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
@@ -19,7 +20,7 @@ public abstract class BaseEntity implements CanGetModelTypeCode {
         return this.getClass().getSimpleName();
     }
 
-    public void publishEvent(Object event) {
+    public void publishEvent(HasEventName event) {
         GlobalConfig.getEventPublisher().publish(event);
     }
 
